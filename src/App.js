@@ -1,7 +1,9 @@
+import Login from './components/login/Login';
+
 function App() {
   return (
     <div className="App">
-      <h1>Chat App</h1>
+        <Login />
     </div>
   );
 }
