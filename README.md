@@ -18,3 +18,10 @@
 ```
 https://react-bootstrap.github.io/
 ```
+
+# Emulators
+- Để sử dụng firebase emulators:
++ Cài đặt command line của firebase: npm i -g firebase-tools
++ Xác thực đăng nhập: firebase login
++ Sau khi đăng nhập thành công: firebase init
++ Chạy emulators: firebase emulators:start

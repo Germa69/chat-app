@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCgdMNGiJTcjP8YnsAbF_13rop32TOB5i0",
@@ -25,5 +25,9 @@ const db = getFirestore(app);
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
+
+// Using filebase emulator local
+connectAuthEmulator(auth, "http://localhost:9099");
+connectFirestoreEmulator(db, 'localhost', 8080);
 
 export { analytics, db, auth };
