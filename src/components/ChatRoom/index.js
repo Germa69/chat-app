@@ -5,7 +5,7 @@ import ChatWindow from "./ChatWindow";
 
 export default function ChatRoom() {
     return (
-        <div>
+        <div>   
             <Row>
                 <Col xl={5} md={0} sm={0} xs={0}>
                     <Sidebar />

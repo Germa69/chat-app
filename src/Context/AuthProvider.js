@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { authentication } from "../components/firebase/config";
-import { Spin } from 'antd';
+import { auth } from "../components/firebase/config";
+import { Spin } from "antd";
 
 // Cấu hình contextAPI để các components có hiển thị thông tin user
 export const AuthContext = React.createContext();
@@ -13,7 +13,7 @@ export default function AuthProvider({ children }) {
     let navigate = useNavigate();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(authentication, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 const { displayName, email, uid, photoURL } = user;
                 setUser({
@@ -41,7 +41,11 @@ export default function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {isLoading ? <Spin style={{ position: 'fixed', inset: 0 }} /> : children}
+            {isLoading ? (
+                <Spin style={{ position: "fixed", top: "50%", left: "50%" }} />
+            ) : (
+                children
+            )}
         </AuthContext.Provider>
     );
 }

@@ -24,6 +24,6 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 // Initialize Firebase Authentication and get a reference to the service
-const authentication = getAuth(app);
+const auth = getAuth(app);
 
-export { analytics, db, authentication };
+export { analytics, db, auth };

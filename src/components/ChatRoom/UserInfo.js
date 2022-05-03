@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, Button, Typography } from "antd";
 import styled from "styled-components";
-import { signOut } from 'firebase/auth';
-import { authentication } from '../firebase/config';
+import { signOut } from "firebase/auth";
+import { auth, db } from "../firebase/config";
+import { collection, onSnapshot } from "firebase/firestore";
 
 const WrapperStyled = styled.div`
     display: flex;
@@ -17,13 +18,37 @@ const WrapperStyled = styled.div`
 `;
 
 export default function UserInfo() {
+    useEffect(() => {
+        const unsubscribe = onSnapshot(
+            collection(db, "users"),
+            (snapshot) => {
+                const data = snapshot.docs.map(doc => ({
+                    ...doc.data(),
+                    id: doc.id,
+                }))
+                
+                // Dữ liệu sau khi convert từ 1 docs của firebase thành kiểu dữ liệu thông thường JS
+                console.log({data, snapshot, docs: snapshot.docs});
+            }
+        );
+
+        // Clear function
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
     return (
         <WrapperStyled>
             <div>
                 <Avatar>Mouse Animate</Avatar>
-                <Typography.Text className="username">Mouse Animate</Typography.Text>
+                <Typography.Text className="username">
+                    Mouse Animate
+                </Typography.Text>
             </div>
-            <Button ghost onClick={() => signOut(authentication)}>Đăng xuất</Button>
+            <Button ghost onClick={() => signOut(auth)}>
+                Đăng xuất
+            </Button>
         </WrapperStyled>
     );
 }

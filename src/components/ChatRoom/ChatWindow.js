@@ -62,8 +62,8 @@ const ContentStyled = styled.div`
 `;
 
 const MessageListStyled = styled.div`
-  max-height: 100%;
-  overflow-y: auto;
+    max-height: 100%;
+    overflow-y: auto;
 `;
 
 export default function ChatWindow() {

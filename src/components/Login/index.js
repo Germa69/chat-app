@@ -2,17 +2,35 @@ import React from "react";
 import $ from "jquery";
 import { TweenMax, Sine } from "gsap";
 import { FaGoogle, FaFacebookSquare } from "react-icons/fa";
-import { signInWithPopup, FacebookAuthProvider } from 'firebase/auth';
-import { authentication } from '../firebase/config';
+import {
+    signInWithPopup,
+    FacebookAuthProvider,
+    getAdditionalUserInfo,
+} from "firebase/auth";
+import { auth, db } from "../firebase/config";
+import { collection, addDoc, serverTimestamp  } from "firebase/firestore"; 
 import "./style.scss";
 
 export default function Login() {
-
     const signInWithFacebook = async () => {
         const provider = new FacebookAuthProvider();
-        const data = await signInWithPopup(authentication, provider);
-        console.log({data});
-    }
+        // Khi người dùng đăng nhập thành công, người dùng mới thì tiến hành ghi dữ liệu vào trong db thông tin user.
+        const data = await signInWithPopup(auth, provider);
+        const result = getAdditionalUserInfo(data);
+
+        if (result?.isNewUser) {
+            await addDoc(collection(db, "users"), {
+                displayName: data.user.displayName,
+                email: data.user.email,
+                photoURL: data.user.photoURL,
+                uid: data.user.uid,
+                providerId: result.providerId,
+                createdAt: serverTimestamp()
+            });
+        } else {
+            console.log("Người dùng cũ");
+        }
+    };
 
     function handleShowDiv() {
         $("#avatar-button").fadeOut("slow", function () {
@@ -29,7 +47,7 @@ export default function Login() {
             scale: 0,
             ease: Sine.easeInOut,
         });
-        $("#wrapper").fadeOut(800, function(){
+        $("#wrapper").fadeOut(800, function () {
             $("#avatar-button").fadeIn(800);
         });
     }
@@ -67,7 +85,10 @@ export default function Login() {
                         </span>
                     </button>
 
-                    <button className="btn btn-social" onClick={signInWithFacebook}>
+                    <button
+                        className="btn btn-social"
+                        onClick={signInWithFacebook}
+                    >
                         <span id="arrow">
                             <img
                                 src="https://github.com/atloomer/atloomer.github.io/blob/master/img/iconmonstr-arrow-48-240.png?raw=true"
@@ -84,5 +105,3 @@ export default function Login() {
         </div>
     );
 }
-
-
