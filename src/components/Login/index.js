@@ -1,28 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import $ from "jquery";
 import { TweenMax, Sine } from "gsap";
 import { FaGoogle, FaFacebookSquare } from "react-icons/fa";
-import { signInWithPopup, FacebookAuthProvider, onAuthStateChanged } from 'firebase/auth';
+import { signInWithPopup, FacebookAuthProvider } from 'firebase/auth';
 import { authentication } from '../firebase/config';
+import "./style.scss";
 
-import "./login.scss";
+export default function Login() {
 
-
-function Login() {
-
-    const signInWithFacebook = () => {
+    const signInWithFacebook = async () => {
         const provider = new FacebookAuthProvider();
-        signInWithPopup(authentication, provider);
+        const data = await signInWithPopup(authentication, provider);
+        console.log({data});
     }
-
-    useEffect(() => {
-        onAuthStateChanged(authentication, user => {
-            if (user) {
-                
-            }
-        })
-    }, [])
-    
 
     function handleShowDiv() {
         $("#avatar-button").fadeOut("slow", function () {
@@ -40,12 +30,12 @@ function Login() {
             ease: Sine.easeInOut,
         });
         $("#wrapper").fadeOut(800, function(){
-          $("#avatar-button").fadeIn(800);
+            $("#avatar-button").fadeIn(800);
         });
     }
 
     return (
-        <div className="app">
+        <div className="background-layout">
             <div id="avatar-button" onClick={handleShowDiv}>
                 <img
                     src="https://dqcgrsy5v35b9.cloudfront.net/cruiseplanner/assets/img/icons/login-w-icon.png"
@@ -95,4 +85,4 @@ function Login() {
     );
 }
 
-export default Login;
+
