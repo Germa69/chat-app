@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../components/firebase/config";
+import { auth } from "../firebase/config";
 import { Spin } from "antd";
 
-// Cấu hình contextAPI để các components có hiển thị thông tin user
+// Configure contextAPI so that components can display user information
 export const AuthContext = React.createContext();
 
 export default function AuthProvider({ children }) {

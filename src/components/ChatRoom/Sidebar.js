@@ -4,8 +4,8 @@ import UserInfo from "./UserInfo";
 import RoomList from "./RoomList";
 import styled from 'styled-components';
 
-// Khi chương trình biên dịch gặp component này sẽ biên dịch ra 1 thẻ div tương ứng trên case DOM,
-// và thẻ div có 1 class do style components render
+// When the compiler encounters this component, it will compile a corresponding div tag on the DOM case,
+// and the div tag has a class rendered by style components.
 const SidebarStyled = styled.div`
     background-color: #3f0e40;
     color: #fff;

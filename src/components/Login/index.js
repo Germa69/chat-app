@@ -7,7 +7,7 @@ import {
     FacebookAuthProvider,
     getAdditionalUserInfo,
 } from "firebase/auth";
-import { auth, db } from "../firebase/config";
+import { auth, db } from "../../firebase/config";
 import { collection, addDoc, serverTimestamp  } from "firebase/firestore"; 
 import "./style.scss";
 
