@@ -28,6 +28,9 @@ export default function AddRoomModal() {
     };
 
     const handleCancel = () => {
+        // Reset form value
+        form.resetFields(); 
+
         setIsAddRoomVisible(false);
     };
 

@@ -1,8 +1,9 @@
+import React, { useContext } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
 import { Avatar, Button, Form, Tooltip, Input } from "antd";
 import Message from "./Message";
-import React from "react";
 import styled from "styled-components";
+import { AppContext } from "../../Context/AppProvider";
 
 const HeaderStyled = styled.div`
     display: flex;
@@ -67,30 +68,27 @@ const MessageListStyled = styled.div`
 `;
 
 export default function ChatWindow() {
+    const { selectedRoom, members } = useContext(AppContext);
+
     return (
         <WrapperStyled>
             <HeaderStyled>
                 <div className="header__info">
-                    <p className="header__title">Room 1</p>
-                    <span className="header__desc">This is a room 1</span>
+                    <p className="header__title">{selectedRoom.name}</p>
+                    <span className="header__desc">
+                        {selectedRoom.description}
+                    </span>
                 </div>
                 <ButtonGroupStyled>
                     <Button icon={<UserAddOutlined />} type="text">
                         Mời
                     </Button>
                     <Avatar.Group size="small" maxCount={2}>
-                        <Tooltip title="A">
-                            <Avatar>A</Avatar>
-                        </Tooltip>
-                        <Tooltip title="A">
-                            <Avatar>B</Avatar>
-                        </Tooltip>
-                        <Tooltip title="A">
-                            <Avatar>C</Avatar>
-                        </Tooltip>
-                        <Tooltip title="A">
-                            <Avatar>D</Avatar>
-                        </Tooltip>
+                        {members.map((member) => (
+                            <Tooltip title={member.displayName} key={member.id}>
+                                <Avatar src={member.photoURL}>{member.photoURL ? '' : member.displayName?.charAt(0)?.toUpperCase()}</Avatar>
+                            </Tooltip>
+                        ))}
                     </Avatar.Group>
                 </ButtonGroupStyled>
             </HeaderStyled>
